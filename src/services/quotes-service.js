@@ -36,16 +36,24 @@ class QuotesService extends Service {
     console.log("this.subscribe", val, this.subscriptions);
     let stream;
 
-    let update = () => {
-        if(val === 'AAPL'){
-            return setTimeout(()=>{        
-                stream.write(new Error('something went wrong'));
-                update = ()=>{}
-            }, 5000)
-        }
+    let lastVal;
 
-        if (this.hasSubscription(val)) {
-        stream.write(Math.random() * 100);
+    let update = () => {
+      if (val === "AAPL") {
+        return setTimeout(() => {
+          stream.write(new Error("something went wrong"));
+          update = () => {};
+        }, 5000);
+      }
+
+      if (this.hasSubscription(val)) {
+        if (!lastVal) {
+          lastVal = 20 + Math.random() * 1000;
+          stream.write(lastVal);
+        } else {
+          lastVal = lastVal * 0.95 + Math.random() * lastVal * 0.05;
+          stream.write(lastVal);
+        }
         setTimeout(update, 300 + Math.random() * 4000);
       }
     };
