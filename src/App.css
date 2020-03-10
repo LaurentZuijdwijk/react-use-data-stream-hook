@@ -2,37 +2,71 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
+.App {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.ticker-row {
+  flex-direction: row;
+  justify-content: flex-start;
+  display: flex;
+
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.Ticker {
+  color: #fff;
+  font-size: 16px;
+  padding: 7px 7px;
+  width: 50px;
+  border: 3px solid white;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 40px;
+  margin: 10px;
+}
+.Ticker-name {
+  color: white;
+  font-size: 10px;
+  text-align: left;
+}
+
+.Ticker-up {
+  animation: blinkGreen 0.2s normal;
+  animation-fill-mode: none;
+}
+.Ticker-down {
+  animation: blinkRed 0.2s normal;
+  animation-fill-mode: none;
+}
+
+@keyframes blinkRed {
+  0% {
+    background-color: #000;
   }
-  to {
-    transform: rotate(360deg);
+  50% {
+    background-color: red;
+  }
+  100% {
+    background-color: #000;
+  }
+}
+@keyframes blinkGreen {
+  0% {
+    background-color: #000;
+  }
+  50% {
+    background-color: green;
+  }
+  100% {
+    background-color: #000;
   }
 }
