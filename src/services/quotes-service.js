@@ -1,41 +1,9 @@
-const _ = require("highland");
+import BaseService from "../lib/services/base-service";
 
-class Service {
-  constructor() {
-    this.subscriptions = {};
-  }
-
-  hasSubscription(sub) {
-    return this.subscriptions[sub] && this.subscriptions[sub].count > 0;
-  }
-
-  getStream(sub) {
-    if (this.hasSubscription(sub)) {
-      this.subscriptions[sub].count++;
-      return this.subscriptions[sub].stream;
-    } else {
-      this.subscriptions[sub] = {};
-      this.subscriptions[sub].count = 1;
-      this.subscriptions[sub].stream = _();
-      return this.subscriptions[sub].stream;
-    }
-  }
-  unsubscribe(val, stream) {
-    stream.destroy();
-    this.subscriptions[val].count--;
-    if (this.subscriptions[val].count === 0) {
-      this.subscriptions[val].stream.destroy();
-      delete this.subscriptions[val];
-    }
-    console.log("this.unsubscribe", this.subscriptions);
-  }
-}
-
-class QuotesService extends Service {
+class QuotesService extends BaseService {
   subscribe(val) {
     console.log("this.subscribe", val, this.subscriptions);
     let stream;
-
     let lastVal;
 
     let update = () => {
@@ -51,10 +19,10 @@ class QuotesService extends Service {
           lastVal = 20 + Math.random() * 1000;
           stream.write(lastVal);
         } else {
-          lastVal = lastVal * 0.95 + Math.random() * lastVal * 0.05;
+          lastVal = lastVal * 0.95 + Math.random() * lastVal * 0.1;
           stream.write(lastVal);
         }
-        setTimeout(update, 300 + Math.random() * 4000);
+        setTimeout(update,  100);
       }
     };
 
