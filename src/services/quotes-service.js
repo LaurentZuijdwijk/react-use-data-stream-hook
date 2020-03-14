@@ -22,7 +22,7 @@ class QuotesService extends BaseService {
           lastVal = lastVal * 0.95 + Math.random() * lastVal * 0.1;
           stream.write(lastVal);
         }
-        setTimeout(update,  100);
+        setTimeout(update,  100 + Math.random() * 5000);
       }
     };
 
