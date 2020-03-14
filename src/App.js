@@ -9,8 +9,9 @@ function App() {
   return (
     <div className="App">
       <div className="ticker-row">
-        {subs.map(val => (
+        {subs.map((val, index) => (
           <Ticker
+            key={index}
             tickerSymbol={val}
             onRemove={val => {
               setSubs(subs.slice(0, subs.length - 1));
