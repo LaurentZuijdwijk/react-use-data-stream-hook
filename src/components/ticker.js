@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import QuotesHook from "../hooks/quotes-hook";
 
-function TickerContainer({tickerSymbol, onRemove}) {
+function TickerContainer({ tickerSymbol, onRemove }) {
   const [value, lastValue, loading, error] = QuotesHook(tickerSymbol);
   return (
     <MemoTicker
@@ -23,7 +23,7 @@ function Ticker({ value, lastValue, loading, error, tickerSymbol, onRemove }) {
 
     window.requestAnimationFrame(function(time) {
       window.requestAnimationFrame(function(time) {
-        element.current.classList.add("Ticker-up");
+        if (element.current) element.current.classList.add("Ticker-up");
       });
     });
   } else if (value < lastValue) {
@@ -31,7 +31,7 @@ function Ticker({ value, lastValue, loading, error, tickerSymbol, onRemove }) {
     element.current.classList.remove("Ticker-up");
     window.requestAnimationFrame(function(time) {
       window.requestAnimationFrame(function(time) {
-        element.current.classList.add("Ticker-down");
+        if (element.current) element.current.classList.add("Ticker-down");
       });
     });
   }
@@ -46,6 +46,6 @@ function Ticker({ value, lastValue, loading, error, tickerSymbol, onRemove }) {
   );
 }
 
-const MemoTicker = (Ticker);
+const MemoTicker = Ticker;
 
 export default TickerContainer;

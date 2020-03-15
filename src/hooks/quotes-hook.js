@@ -10,28 +10,31 @@ function QuotesHook(quote) {
   const hasError = useRef(null);
 
   useEffect(() => {
-    const stream = quotesService.subscribe(quote);
-    stream.filter((val) => {
-        if( val instanceof Error){
-            setError(val);
-            setLoading(false)
-            setValue(null)
-            hasError.current = true
-            return false
+    const subscription = quotesService.subscribe(quote);
+    subscription.stream
+      .filter(val => {
+        if (val instanceof Error) {
+          setError(val);
+          setLoading(false);
+          setValue(null);
+          hasError.current = true;
+          return false;
         }
-        return true
-    })
-    .each(newVal => {
-      if (hasError.current) setError(null);
-      if (loading) setLoading(false);
-      setLastValue(last.current);
-      last.current = newVal;
-      setValue(newVal);
-    });
+        return true;
+      })
+      .on("data", newVal => {
+        if (hasError.current) setError(null);
+        if (loading) setLoading(false);
+        setLastValue(last.current);
+        last.current = newVal;
+        setValue(newVal);
+        // })
+        // .each(newVal => {
+      });
     return () => {
-      quotesService.unsubscribe(quote, stream);
+      subscription.unsubscribe();
     };
-  }, []);
+  }, [quote]);
   return [value, lastValue, loading, error];
 }
 

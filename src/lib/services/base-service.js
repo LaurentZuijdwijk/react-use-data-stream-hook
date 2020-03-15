@@ -1,3 +1,4 @@
+import Subscription from "../subscription";
 const _ = require("highland");
 
 class BaseService {
@@ -20,6 +21,12 @@ class BaseService {
       return this.subscriptions[sub].stream;
     }
   }
+
+  subscribe(val) {
+    const stream = this.getStream(val);
+    return new Subscription(val, stream, this.unsubscribe.bind(this));
+  }
+
   unsubscribe(val, stream) {
     stream.destroy();
     this.subscriptions[val].count--;
@@ -27,7 +34,6 @@ class BaseService {
       this.subscriptions[val].stream.destroy();
       delete this.subscriptions[val];
     }
-    console.log("this.unsubscribe", this.subscriptions);
   }
 }
 
