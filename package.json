@@ -1,35 +1,28 @@
 {
-  "name": "streaming-updates",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
-    "highland": "^2.13.5",
-    "react": "^16.13.0",
-    "react-dom": "^16.13.0",
-    "react-scripts": "3.4.0"
-  },
+  "name": "streamer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "build/index.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build && tape \"build/**/*.test.js\" | tap-spec",
+    "format": "prettier --write src/**/*.ts"
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "author": "Laurent Zuijdwijk",
+  "license": "ISC",
+  "dependencies": {
+    "@types/highland": "^2.12.9",
+    "highland": "^2.13.5"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "devDependencies": {
+    "@types/node": "^13.9.1",
+    "@types/tape": "^4.2.34",
+    "prettier": "1.19.1",
+    "tap-spec": "^5.0.0",
+    "tape": "^4.13.2",
+    "typescript": "^3.8.3"
+  },
+  "prettier": {
+    "printWidth": 200
   }
 }
