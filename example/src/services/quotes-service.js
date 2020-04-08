@@ -34,4 +34,4 @@ class QuotesService extends BaseService {
   }
 }
 
-export default new QuotesService();
+export default QuotesService;

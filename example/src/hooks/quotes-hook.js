@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from "react";
-import quotesService from "../services/quotes-service";
+import { useState, useEffect, useRef, useContext } from "react";
+import ServiceLocator from "./../services/service-locator-context";
 
 function QuotesHook(quote) {
   const [loading, setLoading] = useState(true);
@@ -8,6 +8,9 @@ function QuotesHook(quote) {
   const [lastValue, setLastValue] = useState(null);
   const last = useRef(null);
   const hasError = useRef(null);
+
+  const quotesService = useContext(ServiceLocator).quotesService;
+
 
   useEffect(() => {
     const subscription = quotesService.subscribe(quote);
