@@ -4,9 +4,11 @@ const _ = require("highland");
 type SubValue = { count: number; stream: typeof _ };
 
 class BaseService {
+  debug: Boolean;
   subscriptions: Map<string, SubValue>;
 
-  constructor() {
+  constructor({ debug } = { debug: false }) {
+    this.debug = debug;
     this.subscriptions = new Map();
   }
 
@@ -28,14 +30,15 @@ class BaseService {
       return newSub.stream;
     }
   }
-  write(subscriptionKey:string, value:any):boolean {
-    if(this.hasSubscription(subscriptionKey) ){
-      return this.subscriptions.get(subscriptionKey)?.stream.write(value)
+  write(subscriptionKey: string, value: any):this {
+    if (this.hasSubscription(subscriptionKey)) {
+      this.subscriptions.get(subscriptionKey)?.stream.write(value);
+    } else {
+      if (this.debug) {
+        console.warn("No such subscription", subscriptionKey);
+      }
     }
-    else {
-      throw new Error('no such subscripion')
-    }
-
+    return this
   }
   subscribe(val: string): Subscription {
     const stream = this.getNewStream(val);
