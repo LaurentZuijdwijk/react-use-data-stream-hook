@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/LaurentZuijdwijk/react-use-data-stream-hook/tree/master.svg?style=svg)](https://circleci.com/gh/LaurentZuijdwijk/react-use-data-stream-hook/tree/master)
+
 # Data streamer framework
 
 Easy to create service layer and data streaming for React applications.
