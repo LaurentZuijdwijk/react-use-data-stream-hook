@@ -1,7 +1,8 @@
 {
-  "name": "streamer",
-  "version": "1.0.0",
-  "description": "",
+  "name": "state-streamer",
+  "version": "0.1.0",
+  "description": "Stream data to react components",
+  "keywords": ["react", "state", "streams", "reactive", "observable", "hooks"],
   "main": "build/index.js",
   "scripts": {
     "build": "tsc -p tsconfig.json",
