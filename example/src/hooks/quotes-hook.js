@@ -8,9 +8,7 @@ function QuotesHook(quote) {
   const [lastValue, setLastValue] = useState(null);
   const last = useRef(null);
   const hasError = useRef(null);
-
   const quotesService = useContext(ServiceLocator).quotesService;
-
 
   useEffect(() => {
     const subscription = quotesService.subscribe(quote);
@@ -37,7 +35,7 @@ function QuotesHook(quote) {
     return () => {
       subscription.cancel();
     };
-  }, [quote]);
+  }, []);
   return [value, lastValue, loading, error];
 }
 
