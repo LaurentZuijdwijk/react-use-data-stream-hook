@@ -1,11 +1,10 @@
+import Highland from "highland";
+
 import Subscription from "../subscription";
-const _ = require("highland");
 
-type SubValue = { count: number; stream: typeof _ };
-
-class BaseService {
-  debug: Boolean;
-  subscriptions: Map<string, SubValue>;
+class BaseService<T> {
+  debug: boolean;
+  subscriptions: Map<string, { count: number; stream: Highland.Stream<T> }>;
 
   constructor({ debug } = { debug: false }) {
     this.debug = debug;
@@ -13,24 +12,24 @@ class BaseService {
   }
 
   hasSubscription(sub: string): boolean {
-    return this.subscriptions.has(sub) && this.subscriptions.get(sub)!.count > 0; // eslint-disable-line rule1 rule2
+    return this.subscriptions.has(sub) && this.subscriptions.get(sub)!.count > 0;
   }
 
-  private getNewStream(sub: string): typeof _ {
+  private getNewStream(sub: string): Highland.Stream<T> {
     if (this.hasSubscription(sub)) {
       const subscription = this.subscriptions.get(sub)!;
       subscription.count++;
       return subscription.stream;
     } else {
-      const newSub: SubValue = {
+      const newSub: { count: number; stream: Highland.Stream<T> } = {
         count: 1,
-        stream: _()
+        stream: Highland()
       };
       this.subscriptions.set(sub, newSub);
       return newSub.stream;
     }
   }
-  write(subscriptionKey: string, value: any):this {
+  write(subscriptionKey: string, value: T): this {
     if (this.hasSubscription(subscriptionKey)) {
       this.subscriptions.get(subscriptionKey)?.stream.write(value);
     } else {
@@ -38,14 +37,14 @@ class BaseService {
         console.warn("No such subscription", subscriptionKey);
       }
     }
-    return this
+    return this;
   }
-  subscribe(val: string): Subscription {
+  subscribe(val: string): Subscription<T> {
     const stream = this.getNewStream(val);
     return new Subscription(val, stream, this.unsubscribe.bind(this));
   }
 
-  unsubscribe(key: string, stream: typeof _) {
+  unsubscribe(key: string, stream: Highland.Stream<T>) {
     stream.destroy();
     if (!this.subscriptions.has(key)) return;
     const sub = this.subscriptions.get(key)!;
