@@ -21,7 +21,6 @@ export default class Subscription<T> {
         this.map = this.stream.map.bind(this.stream);
         this.write = this.sourceStream.write.bind(this.sourceStream);
         this.cancel = () => {
-            this.stream.end();
             this.write = () => {
                 throw new Error('subscription has been cancelled');
             };

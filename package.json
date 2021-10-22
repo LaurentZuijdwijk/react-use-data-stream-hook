@@ -1,8 +1,15 @@
 {
   "name": "state-streamer",
-  "version": "0.2.0",
+  "version": "0.2.2",
   "description": "Stream data to react components",
-  "keywords": ["react", "state", "streams", "reactive", "observable", "hooks"],
+  "keywords": [
+    "react",
+    "state",
+    "streams",
+    "reactive",
+    "observable",
+    "hooks"
+  ],
   "main": "build/index.js",
   "scripts": {
     "build": "tsc -p tsconfig.json",
@@ -14,7 +21,7 @@
   "dependencies": {
     "highland": "^2.13.5"
   },
-  "peerDependencies": { 
+  "peerDependencies": {
     "react": "^16.8.0"
   },
   "devDependencies": {
